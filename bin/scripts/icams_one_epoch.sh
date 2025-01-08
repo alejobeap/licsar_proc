@@ -41,10 +41,41 @@ resol=`echo $resdeg" * 111111" | bc | cut -d '.' -f1`
 
 ttime=`grep center_time $metadir/metadata.txt | cut -d '=' -f2 | cut -c -5`
 
+## Solve the problem when the tiome is after 23:30 to take the same day not the next date
+# Convert ttime to minutes since midnight for comparison
+ttime_minutes=$(echo $ttime | awk -F: '{ print ($1 * 60) + $2 }')
+limit_minutes=$((23 * 60 + 30))
+
+# Combine date and time into a single variable
+datetime="${date} ${ttime}"
+
+if (( ttime_minutes > limit_minutes )); then
+    tt="00:00"
+    # Increment the date by one day and format it back to YYYYMMDD
+    # Convert input date to a recognized format for date manipulation
+    formatted_date=$(date -d "$epoch" +%Y-%m-%d)
+    # Increment the date by one day and format it back to YYYYMMDD
+    #echo $formatted_date
+    new_date=$epoch #(date -d "$formatted_date +1 day" +%Y%m%d)    
+    #echo "New date" ${new_date}
+    #echo $tt
+    icamsout=icams/ERA5/sar/${new_date}'_tot.h5'
+
+else
+    tt="$ttime"
+    new_date=$epoch
+    #echo $new_date
+    #echo $tt
+    icamsout=icams/ERA5/sar/$epoch'_tot.h5'
+
+fi
+
+
 #ppwd=`pwd`
 #epoch=`basename $ppwd`
 
-tropo_icams_date.py $epoch --region " "$wesn" " --imaging-time $ttime --dem-tif $hgt --resolution $resol
+#tropo_icams_date.py $epoch --region " "$wesn" " --imaging-time $ttime --dem-tif $hgt --resolution $resol
+tropo_icams_date.py $new_date --region " "$wesn" " --imaging-time $ttime --dem-tif $hgt --resolution $resol
 
 python3 -c "import lics_processing as lp; lp.ztd2sltd('"$icamsout"', '"$U"', outif = '"$sltdout"')"
 
