@@ -75,6 +75,16 @@ fi
 
 python tropo_icams_date.py ${new_date} --region " "$wesn" " --imaging-time $tt --dem-tif $hgt --resolution $resol
 
+
+### You need to remove from file /gws/smf/j04/nceo_geohazards/software/ICAMS/icams/tropo_icams_date.py
+#    if hour>23:
+#        hour = 0
+#        date = (dt.datetime.strptime(date,'%Y%m%d').date()+dt.timedelta(1)).strftime('%Y%m%d')
+#        print('Careful, midnight issue probably not solved fully')
+#        #print(fname)
+
+
+
 #####
 
 
