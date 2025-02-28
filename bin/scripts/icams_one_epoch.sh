@@ -75,10 +75,17 @@ fi
 
 python tropo_icams_date.py ${new_date} --region " "$wesn" " --imaging-time $tt --dem-tif $hgt --resolution $resol
 
-#####
+##### You need to comment in the file /gws/smf/j04/nceo_geohazards/software/ICAMS/icams/tropo_icams_date.py
+#    if hour>23:
+#        hour = 0
+#        date = (dt.datetime.strptime(date,'%Y%m%d').date()+dt.timedelta(1)).strftime('%Y%m%d')
+#        print('Careful, midnight issue probably not solved fully')
+#        #print(fname)
+
 
 
 #tropo_icams_date.py $epoch --region " "$wesn" " --imaging-time $ttime --dem-tif $hgt --resolution $resol
+
 
 python3 -c "import lics_processing as lp; lp.ztd2sltd('"$icamsout"', '"$U"', outif = '"$sltdout"')"
 
