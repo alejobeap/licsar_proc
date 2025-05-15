@@ -65,7 +65,7 @@ def read_bperp_file(bperp_file, imdates, return_missflag = False):
 
 
 #%%
-def plot_network_upd(ifgdates, bperp, frame, pngfile, firstdate = dt.datetime(2014, 9, 25), lastdate = dt.datetime(2024, 12, 31)):
+def plot_network_upd(ifgdates, bperp, frame, pngfile, firstdate = dt.datetime(2014, 9, 25), lastdate = dt.datetime(2025, 5, 1)):
     """
     Plot network of interferometric pairs.
     bperp can be dummy (-1~1).
