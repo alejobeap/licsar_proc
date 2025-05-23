@@ -52,3 +52,27 @@ for dir in $pubdir/epochs $pubdir/interferograms $procdir/log $procdir/tab $proc
  ls -d $dir/*$epoch* 2>/dev/null
  rm -rf $dir/*$epoch* 2>/dev/null
 done
+
+
+
+#### Delete subsets for volcanoes for frame and date
+curdir=$LiCSAR_procdir
+tr=`echo $frame | cut -d '_' -f1 | sed 's/^0//' | sed 's/^0//' | rev | cut -c 2- | rev`
+tr1=`(echo $frame | cut -d '_' -f1 | sed 's/^0*//' | sed 's/[A-Z]$/D/')`
+echo $tr1
+frameDir=$curdir/$tr/$frame
+
+
+if [ -d $frameDir/subsets ]; then
+  echo "clipping for subsets"
+  for subset in `ls $frameDir/subsets`; do
+    echo "subset "$subset
+    cornersclip=$frameDir/subsets/$subset/corners_clip.$frame
+    subdir=$frameDir/subsets/$subset
+    dirsub="/gws/nopw/j04/nceo_geohazards_vol1/projects/LiCS/proc/current/$subset/volc/$tr1/RSLC/$epoch"
+    echo $dirsub
+    echo $subset
+    echo "delete $epoch"
+
+  done
+fi
