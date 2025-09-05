@@ -40,6 +40,8 @@ if [ -f $coh ]; then
 else
   coh=$ifgdir/$ifgid.geo.cc.tif
 fi
+
+outunw="$ifgdir/$ifgid.geo.unw.tif"
 outunwpng="$ifgdir/$ifgid.geo.unw.png" #add to check if the png also
 
 if [[ -f "$outunw" && -f "$outunwpng" ]]; then  
